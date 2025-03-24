@@ -21,6 +21,8 @@ const AssignmentsView = (props) => {
     const [assignments, setAssignments] = useState([]);
     const [message, setMessage] = useState('');
 
+    const headers = ['Assignment ID', 'Title', 'Due Date', 'Actions'];
+
     const fetchAssignments = async () => {
         try {
             const response = await fetch(`${SERVER_URL}/sections/${secNo}/assignments`);
@@ -37,7 +39,10 @@ const AssignmentsView = (props) => {
     };
 
     useEffect(() => {
-        fetchAssignments();
+        const run = async () => {
+            await fetchAssignments();
+        };
+        run();
     }, []);
 
     const handleGrade = (assignmentId) => {
@@ -89,10 +94,9 @@ const AssignmentsView = (props) => {
             <table className="Center">
                 <thead>
                 <tr>
-                    <th>Assignment ID</th>
-                    <th>Title</th>
-                    <th>Due Date</th>
-                    <th>Actions</th>
+                    {headers.map((header, index) => (
+                        <th key={index}>{header}</th>
+                    ))}
                 </tr>
                 </thead>
                 <tbody>
