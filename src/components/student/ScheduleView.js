@@ -21,6 +21,14 @@ const ScheduleView = (props) => {
     const [enrollments, setEnrollments] = useState([]);
     const [search, setSearch] = useState({studentId: '', year:'', semester:''});
     const [message, setMessage] = useState('');
+
+    // http://localhost:8080/enrollments?studentId=3&year=2025&semester=Spring
+    // returns
+    // {
+    //     "enrollmentId": 2, "grade": "B", "studentId": 3, "name": "thomas edison", "email": "tedison@csumb.edu",
+    //     "courseId": "cst363", "title": "Introduction to Database", "sectionId": 1, "sectionNo": 8, "building": "052",
+    //     "room": "104", "times": "M W 10:00-11:50", "credits": 4, "year": 2025, "semester": "Spring"
+    // }
     // const [enrollment, setEnrollment] = useState(
     //     {enrollmentId:'', grade:'', studentId:'', name:'', email:'', courseId:'', title:'', sectionId:'',
     //         sectionNo:'',  building:'', room:'', times:'', credits:'', year:'', semester:''}
@@ -93,7 +101,6 @@ const ScheduleView = (props) => {
     return(
         <div>
             <h3>Enrollments</h3>
-
             <h4>{message}</h4>
             <h4>Enter year, semester.  Example  2025 Spring</h4>
             <table className="Center">
