@@ -55,7 +55,7 @@ const AssignmentsView = (props) => {
 
     const deleteAssignment = async (assignmentId) => {
         try {
-            const response = await fetch(`${SERVER_URL}/assignments/${assignmentId}`, {
+            const response = await fetch(`${SERVER_URL}/assignments/${assignmentId}?instructorEmail=dwisneski@csumb.edu`, {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' },
             });
