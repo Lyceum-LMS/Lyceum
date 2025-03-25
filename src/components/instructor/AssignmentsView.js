@@ -25,8 +25,6 @@ const AssignmentsView = (props) => {
 
     const headers = ['Assignment ID', 'Title', 'Due Date', 'Actions'];
 
-    const [assignment, setAssignment] = useState({ title: '', dueDate: '' , courseId:'', secId:'', secNo:''});
-
     const fetchAssignments = async () => {
         try {
             const response = await fetch(`${SERVER_URL}/sections/${secNo}/assignments?instructorEmail=dwisneski@csumb.edu`);
@@ -42,11 +40,8 @@ const AssignmentsView = (props) => {
         }
     };
 
-    useEffect(() => {
-        const run = async () => {
-            await fetchAssignments();
-        };
-        run();
+    useEffect(() =>{
+        fetchAssignments()
     }, []);
 
     const handleGrade = (assignmentId) => {
@@ -91,14 +86,13 @@ const AssignmentsView = (props) => {
         });
     };
 
-    // sls/hp
-    //    const [assignment, setAssignment] = useState({ title: '', dueDate: '' , courseId:'', secId:'', secNo:''});
-    const addAssignment = async (assignment0) => {
-        console.log("AssignmentView: ");
-        setAssignment({title: assignment0.title, dueDate: assignment0.dueDate, courseId: courseId, secId: secId, secNo: secNo});
-        console.log(assignment);
+
+    const addAssignment = async (assignment) => {
+        assignment.courseId = courseId;
+        assignment.secId = secId;
+        assignment.secNo = secNo;
         try {
-            const response = await  fetch(`${SERVER_URL}/assignments?instructorEmail=dwisneski@csumb.edu`,
+            const response = await fetch(`${SERVER_URL}/assignments?instructorEmail=dwisneski@csumb.edu`,
                 {
                     method: 'POST',
                     headers: {
