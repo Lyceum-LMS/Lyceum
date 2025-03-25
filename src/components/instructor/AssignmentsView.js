@@ -25,7 +25,7 @@ const AssignmentsView = (props) => {
 
     const fetchAssignments = async () => {
         try {
-            const response = await fetch(`${SERVER_URL}/sections/${secNo}/assignments`);
+            const response = await fetch(`${SERVER_URL}/sections/${secNo}/assignments?instructorEmail=dwisneski@csumb.edu`);
             if (response.ok) {
                 const data = await response.json();
                 setAssignments(data);
