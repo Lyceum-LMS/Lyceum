@@ -4,6 +4,8 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import Button from '@mui/material/Button';
 import { SERVER_URL } from '../../Constants';
+import UserAdd from "../admin/UserAdd";
+import AssignmentAdd from "./AssignmentAdd";
 
 // instructor views assignments for their section
 // use location to get the section value
@@ -22,6 +24,8 @@ const AssignmentsView = (props) => {
     const [message, setMessage] = useState('');
 
     const headers = ['Assignment ID', 'Title', 'Due Date', 'Actions'];
+
+    const [assignment, setAssignment] = useState({ title: '', dueDate: '' , courseId:'', secId:'', secNo:''});
 
     const fetchAssignments = async () => {
         try {
@@ -87,8 +91,36 @@ const AssignmentsView = (props) => {
         });
     };
 
+    // sls/hp
+    //    const [assignment, setAssignment] = useState({ title: '', dueDate: '' , courseId:'', secId:'', secNo:''});
+    const addAssignment = async (assignment0) => {
+        console.log("AssignmentView: ");
+        setAssignment({title: assignment0.title, dueDate: assignment0.dueDate, courseId: courseId, secId: secId, secNo: secNo});
+        console.log(assignment);
+        try {
+            const response = await  fetch(`${SERVER_URL}/assignments?instructorEmail=dwisneski@csumb.edu`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(assignment),
+                });
+            if (response.ok) {
+                const newAssignment = await response.json();
+                setMessage("assignment added id="+newAssignment.id);
+                await fetchAssignments();
+            } else {
+                const rc = await response.json();
+                setMessage(rc.message);
+            }
+        } catch (err) {
+            setMessage("network error: "+err);
+        }
+    }
+
     return (
-        <div>
+        <>
             <h2>Assignments for Section #{secNo}</h2>
             <h4>{message}</h4>
             <table className="Center">
@@ -114,7 +146,8 @@ const AssignmentsView = (props) => {
                 ))}
                 </tbody>
             </table>
-        </div>
+            <AssignmentAdd save={addAssignment} />
+        </>
     );
 };
 
