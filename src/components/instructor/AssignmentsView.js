@@ -53,12 +53,6 @@ const AssignmentsView = (props) => {
         console.log("Grade assignment", assignmentId);
     };
 
-    // const handleEdit = (assignment) => {
-    //     console.log("Edit assignment", assignment.assignmentId);
-    //     setEditingAssignment(assignment);
-    // };
-
-
     const updateAssignment = async (assignment) => {
         console.log("AssignmentView > updateAssignment");
         console.log(assignment);
@@ -83,31 +77,6 @@ const AssignmentsView = (props) => {
             setMessage("network error: "+err);
         }
     }
-
-    // const gradeAssignment = async (assignment) => {
-    //     console.log("AssignmentView > updateAssignment");
-    //     console.log(assignment);
-    //     try {
-    //         const response = await fetch(`${SERVER_URL}/assignments/${assignment.id}?instructorEmail=dwisneski@csumb.edu`,
-    //             {
-    //                 method: 'PUT',
-    //                 headers: {
-    //                     'Content-Type': 'application/json',
-    //                 },
-    //                 body: JSON.stringify(assignment),
-    //             });
-    //         if (response.ok) {
-    //             const newAssignment = await response.json();
-    //             setMessage("assignment added id="+newAssignment.id);
-    //             await fetchAssignments();
-    //         } else {
-    //             const rc = await response.json();
-    //             setMessage(rc.message);
-    //         }
-    //     } catch (err) {
-    //         setMessage("network error: "+err);
-    //     }
-    // }
 
     const deleteAssignment = async (assignmentId) => {
         try {
@@ -201,14 +170,6 @@ const AssignmentsView = (props) => {
                 ))}
                 </tbody>
             </table>
-            {/* Show update form only if editingAssignment is set */}
-            {/*{editingAssignment && (*/}
-            {/*    <AssignmentUpdate*/}
-            {/*        assignment={editingAssignment}*/}
-            {/*        save={updateAssignment}*/}
-            {/*        onClose={() => setEditingAssignment(null)}*/}
-            {/*    />*/}
-            {/*)}*/}
             <AssignmentAdd save={addAssignment} />
         </>
     );

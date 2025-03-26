@@ -54,7 +54,7 @@ const InstructorSectionsView = (props) => {
             {message && <p>{message}</p>}
 
             {sections.length > 0 && (
-                <table border="1" style={{ marginTop: '1em' }}>
+                <table border="1" style={{margin: '1em auto', textAlign: 'left', borderCollapse: 'collapse'}}>
                     <thead>
                     <tr>
                         <th>Year</th>
