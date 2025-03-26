@@ -19,7 +19,7 @@ const ScheduleView = (props) => {
         'Building', 'Room', 'Times', 'Credits', 'Year', 'Semester', ''];
 
     const [enrollments, setEnrollments] = useState([]);
-    const [search, setSearch] = useState({studentId: '', year:'', semester:''});
+    const [search, setSearch] = useState({studentId: 3, year:'', semester:''});
     const [message, setMessage] = useState('');
 
     // http://localhost:8080/enrollments?studentId=3&year=2025&semester=Spring
@@ -105,10 +105,10 @@ const ScheduleView = (props) => {
             <h4>Enter year, semester.  Example  2025 Spring</h4>
             <table className="Center">
                 <tbody>
-                <tr>
-                    <td>StudentId: </td>
-                    <td><input type="text" id="sstudentId" name="studentId" value={search.studentId} onChange={editChange} /></td>
-                </tr>
+                {/*<tr>*/}
+                {/*    <td>StudentId: </td>*/}
+                {/*    <td><input type="text" id="sstudentId" name="studentId" value={search.studentId} onChange={editChange} /></td>*/}
+                {/*</tr>*/}
                 <tr>
                     <td>Year:</td>
                     <td><input type="text" id="syear" name="year" value={search.year} onChange={editChange} /></td>
