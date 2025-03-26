@@ -88,9 +88,15 @@ const AssignmentsView = (props) => {
 
 
     const addAssignment = async (assignment) => {
-        assignment.courseId = courseId;
-        assignment.secId = secId;
-        assignment.secNo = secNo;
+        // assignment.courseId = courseId;
+        // assignment.secId = secId;
+        // assignment.secNo = secNo;
+        const updatedAssignment = {
+            ...assignment,
+            courseId: courseId,
+            secId: secId,
+            secNo: secNo
+        };
         try {
             const response = await fetch(`${SERVER_URL}/assignments?instructorEmail=dwisneski@csumb.edu`,
                 {
@@ -98,7 +104,7 @@ const AssignmentsView = (props) => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(assignment),
+                    body: JSON.stringify(updatedAssignment),
                 });
             if (response.ok) {
                 const newAssignment = await response.json();

@@ -12,7 +12,7 @@ const Transcript = (props) => {
     const headers =
         ['Year', 'Semester',  'CourseId', 'SectionId', 'Title', 'Credits', 'Grade'];
     const [transcripts, setTranscripts] = useState([]);
-    const [search, setSearch] = useState({studentId: ''});
+    const [search, setSearch] = useState({studentId: 3});
     const [message, setMessage] = useState('');
 
     // http://localhost:8080/transcripts?studentId=3
@@ -42,26 +42,30 @@ const Transcript = (props) => {
         }
     }
 
-    const editChange = (event) => {
-        setSearch({...search,  [event.target.name]:event.target.value});
-    }
+    // const editChange = (event) => {
+    //     setSearch({...search,  [event.target.name]:event.target.value});
+    // }
+
+    useEffect(() =>{
+        fetchTranscript()
+    }, []);
 
     return(
         <div>
             <h3>Enrollments</h3>
             <h4>{message}</h4>
-            <h4>Enter studentId.  Example  3</h4>
+            {/*<h4>Enter studentId.  Example  3</h4>*/}
             <table className="Center">
-                <tbody>
-                <tr>
-                    <td>StudentId: </td>
-                    <td><input type="text" id="sstudentId" name="studentId" value={search.studentId} onChange={editChange} /></td>
-                </tr>
-                </tbody>
+                {/*<tbody>*/}
+                {/*<tr>*/}
+                {/*    <td>StudentId: </td>*/}
+                {/*    <td><input type="text" id="sstudentId" name="studentId" value={search.studentId} onChange={editChange} /></td>*/}
+                {/*</tr>*/}
+                {/*</tbody>*/}
             </table>
-            <br/>
-            <button id="search" type="submit" onClick={fetchTranscript} >View Transcript</button>
-            <br/>
+            {/*<br/>*/}
+            {/*<button id="search" type="submit" onClick={fetchTranscript} >View Transcript</button>*/}
+            {/*<br/>*/}
             <br/>
             <table className="Center" >
                 <thead>
