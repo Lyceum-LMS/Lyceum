@@ -42,9 +42,9 @@ const Transcript = (props) => {
         }
     }
 
-    // const editChange = (event) => {
-    //     setSearch({...search,  [event.target.name]:event.target.value});
-    // }
+    const editChange = (event) => {
+        setSearch({...search,  [event.target.name]:event.target.value});
+    }
 
     useEffect(() =>{
         fetchTranscript()
@@ -55,14 +55,14 @@ const Transcript = (props) => {
             <h3>Enrollments</h3>
             <h4>{message}</h4>
             {/*<h4>Enter studentId.  Example  3</h4>*/}
-            <table className="Center">
-                {/*<tbody>*/}
-                {/*<tr>*/}
-                {/*    <td>StudentId: </td>*/}
-                {/*    <td><input type="text" id="sstudentId" name="studentId" value={search.studentId} onChange={editChange} /></td>*/}
-                {/*</tr>*/}
-                {/*</tbody>*/}
-            </table>
+            {/*<table className="Center">*/}
+            {/*    <tbody>*/}
+            {/*    <tr>*/}
+            {/*        <td>StudentId: </td>*/}
+            {/*        <td><input type="text" id="sstudentId" name="studentId" value={search.studentId} onChange={editChange} /></td>*/}
+            {/*    </tr>*/}
+            {/*    </tbody>*/}
+            {/*</table>*/}
             {/*<br/>*/}
             {/*<button id="search" type="submit" onClick={fetchTranscript} >View Transcript</button>*/}
             {/*<br/>*/}
