@@ -4,6 +4,11 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import Button from '@mui/material/Button';
 import { SERVER_URL } from '../../Constants';
+import UserAdd from "../admin/UserAdd";
+import AssignmentAdd from "./AssignmentAdd";
+import AssignmentUpdate from "./AssignmentUpdate";
+import CourseUpdate from "../admin/CourseUpdate";
+import AssignmentGrade from "./AssignmentGrade";
 
 // instructor views assignments for their section
 // use location to get the section value
@@ -23,9 +28,11 @@ const AssignmentsView = (props) => {
 
     const headers = ['Assignment ID', 'Title', 'Due Date', 'Actions'];
 
+    const [editingAssignment, setEditingAssignment] = useState(null);
+
     const fetchAssignments = async () => {
         try {
-            const response = await fetch(`${SERVER_URL}/sections/${secNo}/assignments`);
+            const response = await fetch(`${SERVER_URL}/sections/${secNo}/assignments?instructorEmail=dwisneski@csumb.edu`);
             if (response.ok) {
                 const data = await response.json();
                 setAssignments(data);
@@ -38,24 +45,42 @@ const AssignmentsView = (props) => {
         }
     };
 
-    useEffect(() => {
-        const run = async () => {
-            await fetchAssignments();
-        };
-        run();
+    useEffect(() =>{
+        fetchAssignments()
     }, []);
 
     const handleGrade = (assignmentId) => {
         console.log("Grade assignment", assignmentId);
     };
 
-    const handleEdit = (assignmentId) => {
-        console.log("Edit assignment", assignmentId);
-    };
+    const updateAssignment = async (assignment) => {
+        console.log("AssignmentView > updateAssignment");
+        console.log(assignment);
+        try {
+            const response = await fetch(`${SERVER_URL}/assignments/${assignment.id}?instructorEmail=dwisneski@csumb.edu`,
+                {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(assignment),
+                });
+            if (response.ok) {
+                const newAssignment = await response.json();
+                setMessage("assignment added id="+newAssignment.id);
+                await fetchAssignments();
+            } else {
+                const rc = await response.json();
+                setMessage(rc.message);
+            }
+        } catch (err) {
+            setMessage("network error: "+err);
+        }
+    }
 
     const deleteAssignment = async (assignmentId) => {
         try {
-            const response = await fetch(`${SERVER_URL}/assignments/${assignmentId}`, {
+            const response = await fetch(`${SERVER_URL}/assignments/${assignmentId}?instructorEmail=dwisneski@csumb.edu`, {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' },
             });
@@ -87,8 +112,41 @@ const AssignmentsView = (props) => {
         });
     };
 
+
+    const addAssignment = async (assignment) => {
+        // assignment.courseId = courseId;
+        // assignment.secId = secId;
+        // assignment.secNo = secNo;
+        const updatedAssignment = {
+            ...assignment,
+            courseId: courseId,
+            secId: secId,
+            secNo: secNo
+        };
+        try {
+            const response = await fetch(`${SERVER_URL}/assignments?instructorEmail=dwisneski@csumb.edu`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(updatedAssignment),
+                });
+            if (response.ok) {
+                const newAssignment = await response.json();
+                setMessage("assignment added id="+newAssignment.id);
+                await fetchAssignments();
+            } else {
+                const rc = await response.json();
+                setMessage(rc.message);
+            }
+        } catch (err) {
+            setMessage("network error: "+err);
+        }
+    }
+
     return (
-        <div>
+        <>
             <h2>Assignments for Section #{secNo}</h2>
             <h4>{message}</h4>
             <table className="Center">
@@ -105,16 +163,15 @@ const AssignmentsView = (props) => {
                         <td>{assignment.id}</td>
                         <td>{assignment.title}</td>
                         <td>{assignment.dueDate}</td>
-                        <td>
-                            <Button variant="outlined" onClick={() => handleGrade(assignment.id)}>Grade</Button>
-                            <Button variant="outlined" onClick={() => handleEdit(assignment.id)}>Edit</Button>
-                            <Button variant="outlined" color="error" onClick={() => handleDelete(assignment.id)}>Delete</Button>
-                        </td>
+                        <td><AssignmentGrade assignment={assignment}/></td>
+                        <td><AssignmentUpdate assignment={assignment} save={updateAssignment} /></td>
+                        <td> <Button variant="outlined" color="error" onClick={() => handleDelete(assignment.id)}>Delete</Button></td>
                     </tr>
                 ))}
                 </tbody>
             </table>
-        </div>
+            <AssignmentAdd save={addAssignment} />
+        </>
     );
 };
 
