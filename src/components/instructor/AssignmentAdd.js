@@ -27,7 +27,8 @@ const AssignmentAdd = (props) => {
     const [editMessage, setEditMessage] = useState('');
 
     // State to store the new assignment's title and due date
-    const [assignment, setAssignment] = useState({ title: '', dueDate: '' });
+    // sls/hp
+    const [assignment, setAssignment] = useState({ title: '', dueDate: '', courseId:'', secId:'', secNo:'' });
 
     // Opens the dialog and clears any previous error messages
     const editOpen = () => {
@@ -36,9 +37,10 @@ const AssignmentAdd = (props) => {
     };
 
     // Closes the dialog and resets the assignment form fields and messages
+    // sls/hp
     const editClose = () => {
         setOpen(false);
-        setAssignment({ title: '', dueDate: '' }); // reset fields
+        setAssignment({ title: '', dueDate: '', courseId:'', secId:'', secNo:'' }); // reset fields
         setEditMessage(''); // reset error message
     };
 
