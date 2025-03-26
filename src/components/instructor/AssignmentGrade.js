@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { TextField, Button, DialogActions, DialogContent } from '@mui/material';
 import { SERVER_URL } from '../../Constants';
+import Dialog from "@mui/material/Dialog";
 
 // instructor enters students' grades for an assignment
 // fetch the grades using the URL /assignments/{id}/grades
@@ -10,8 +11,13 @@ import { SERVER_URL } from '../../Constants';
 // score column is an input field
 
 const AssignmentGrade = (props) => {
+// const AssignmentGrade = ({ assignment, open, onClose }) => {
+//     const assignmentId = assignment?.id;
+
     const location = useLocation();
-    const { assignmentId } = location.state;
+    // const { assignmentId } = location.state;
+
+    const assignmentId = props.assignment?.id || location.state?.assignmentId;
 
     const [open, setOpen] = useState(false);
     const [editMessage, setEditMessage] = useState('');
@@ -22,7 +28,14 @@ const AssignmentGrade = (props) => {
         grades: []
     });
 
-    useEffect(() => {
+    const editOpen = () => {
+        setOpen(true);
+        // setMessage("");
+        fetchGrades();
+    }
+
+
+    // useEffect(() => {
         const fetchGrades = async () => {
             try {
                 const response = await fetch(`${SERVER_URL}/assignments/${assignmentId}/grades`);
@@ -44,8 +57,8 @@ const AssignmentGrade = (props) => {
                 setEditMessage("Network error: " + err);
             }
         };
-        fetchGrades();
-    }, [assignmentId]);
+    //     fetchGrades();
+    // }, [assignmentId]);
 
     const onChange = (event, index) => {
         const updatedGrades = [...gradeData.grades];
@@ -77,6 +90,8 @@ const AssignmentGrade = (props) => {
 
     return (
         <>
+            <Button variant="outlined" onClick={editOpen}>Grade</Button>
+            <Dialog open = {open}>
             <DialogContent style={{ paddingTop: 20 }}>
                 <h3>Enter Grades for Assignment: {gradeData.assignmentTitle}</h3>
                 <h4>Course: {gradeData.courseId} | Section: {gradeData.sectionNo}</h4>
@@ -116,6 +131,7 @@ const AssignmentGrade = (props) => {
                 <Button color="secondary" onClick={editClose}>Close</Button>
                 <Button color="primary" onClick={onSave}>Save</Button>
             </DialogActions>
+            </Dialog>
         </>
     );
 };

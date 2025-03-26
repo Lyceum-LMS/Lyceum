@@ -8,6 +8,7 @@ import UserAdd from "../admin/UserAdd";
 import AssignmentAdd from "./AssignmentAdd";
 import AssignmentUpdate from "./AssignmentUpdate";
 import CourseUpdate from "../admin/CourseUpdate";
+import AssignmentGrade from "./AssignmentGrade";
 
 // instructor views assignments for their section
 // use location to get the section value
@@ -52,11 +53,10 @@ const AssignmentsView = (props) => {
         console.log("Grade assignment", assignmentId);
     };
 
-    const handleEdit = (assignment) => {
-        console.log("Edit assignment", assignment.assignmentId);
-        setEditingAssignment(assignment);
-    };
-
+    // const handleEdit = (assignment) => {
+    //     console.log("Edit assignment", assignment.assignmentId);
+    //     setEditingAssignment(assignment);
+    // };
 
 
     const updateAssignment = async (assignment) => {
@@ -83,6 +83,31 @@ const AssignmentsView = (props) => {
             setMessage("network error: "+err);
         }
     }
+
+    // const gradeAssignment = async (assignment) => {
+    //     console.log("AssignmentView > updateAssignment");
+    //     console.log(assignment);
+    //     try {
+    //         const response = await fetch(`${SERVER_URL}/assignments/${assignment.id}?instructorEmail=dwisneski@csumb.edu`,
+    //             {
+    //                 method: 'PUT',
+    //                 headers: {
+    //                     'Content-Type': 'application/json',
+    //                 },
+    //                 body: JSON.stringify(assignment),
+    //             });
+    //         if (response.ok) {
+    //             const newAssignment = await response.json();
+    //             setMessage("assignment added id="+newAssignment.id);
+    //             await fetchAssignments();
+    //         } else {
+    //             const rc = await response.json();
+    //             setMessage(rc.message);
+    //         }
+    //     } catch (err) {
+    //         setMessage("network error: "+err);
+    //     }
+    // }
 
     const deleteAssignment = async (assignmentId) => {
         try {
@@ -169,11 +194,9 @@ const AssignmentsView = (props) => {
                         <td>{assignment.id}</td>
                         <td>{assignment.title}</td>
                         <td>{assignment.dueDate}</td>
-                        <td>
-                            <Button variant="outlined" onClick={() => handleGrade(assignment.id)}>Grade</Button>
-                            <Button variant="outlined" color="error" onClick={() => handleDelete(assignment.id)}>Delete</Button>
-                        </td>
+                        <td><AssignmentGrade assignment={assignment}/></td>
                         <td><AssignmentUpdate assignment={assignment} save={updateAssignment} /></td>
+                        <td> <Button variant="outlined" color="error" onClick={() => handleDelete(assignment.id)}>Delete</Button></td>
                     </tr>
                 ))}
                 </tbody>
