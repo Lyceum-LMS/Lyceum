@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { SERVER_URL } from '../../Constants';
+import { GRADEBOOK_URL } from '../../Constants';
 
 // instructor views a list of sections they are teaching
 // use the URL /sections?email=dwisneski@csumb.edu&year= &semester=
@@ -28,7 +28,7 @@ const InstructorSectionsView = (props) => {
             }
 
             const email = 'dwisneski@csumb.edu'; // hardcoded for now
-            const url = `${SERVER_URL}/sections?email=${email}&year=${year}&semester=${semester}`;
+            const url = `${GRADEBOOK_URL}/sections?email=${email}&year=${year}&semester=${semester}`;
 
             try {
                 const response = await fetch(url);

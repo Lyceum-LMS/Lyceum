@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import Button from '@mui/material/Button';
-import { SERVER_URL } from '../../Constants';
+import { GRADEBOOK_URL } from '../../Constants';
 import UserAdd from "../admin/UserAdd";
 import AssignmentAdd from "./AssignmentAdd";
 import AssignmentUpdate from "./AssignmentUpdate";
@@ -32,7 +32,7 @@ const AssignmentsView = (props) => {
 
     const fetchAssignments = async () => {
         try {
-            const response = await fetch(`${SERVER_URL}/sections/${secNo}/assignments?instructorEmail=dwisneski@csumb.edu`);
+            const response = await fetch(`${GRADEBOOK_URL}/sections/${secNo}/assignments?instructorEmail=dwisneski@csumb.edu`);
             if (response.ok) {
                 const data = await response.json();
                 setAssignments(data);
@@ -57,7 +57,7 @@ const AssignmentsView = (props) => {
         console.log("AssignmentView > updateAssignment");
         console.log(assignment);
         try {
-            const response = await fetch(`${SERVER_URL}/assignments/${assignment.id}?instructorEmail=dwisneski@csumb.edu`,
+            const response = await fetch(`${GRADEBOOK_URL}/assignments/${assignment.id}?instructorEmail=dwisneski@csumb.edu`,
                 {
                     method: 'PUT',
                     headers: {
@@ -80,7 +80,7 @@ const AssignmentsView = (props) => {
 
     const deleteAssignment = async (assignmentId) => {
         try {
-            const response = await fetch(`${SERVER_URL}/assignments/${assignmentId}?instructorEmail=dwisneski@csumb.edu`, {
+            const response = await fetch(`${GRADEBOOK_URL}/assignments/${assignmentId}?instructorEmail=dwisneski@csumb.edu`, {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' },
             });
@@ -124,7 +124,7 @@ const AssignmentsView = (props) => {
             secNo: secNo
         };
         try {
-            const response = await fetch(`${SERVER_URL}/assignments?instructorEmail=dwisneski@csumb.edu`,
+            const response = await fetch(`${GRADEBOOK_URL}/assignments?instructorEmail=dwisneski@csumb.edu`,
                 {
                     method: 'POST',
                     headers: {

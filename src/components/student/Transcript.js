@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {SERVER_URL} from "../../Constants";
+import {REGISTRAR_URL} from "../../Constants";
 import Button from "@mui/material/Button";
 
 // students gets a list of all courses taken and grades
@@ -28,7 +28,7 @@ const Transcript = (props) => {
             setMessage("Enter search parameters");
         } else {
             try {
-                const response = await fetch(`${SERVER_URL}/transcripts?studentId=${search.studentId}`);
+                const response = await fetch(`${REGISTRAR_URL}/transcripts?studentId=${search.studentId}`);
                 if (response.ok) {
                     const data = await response.json();
                     setTranscripts(data);

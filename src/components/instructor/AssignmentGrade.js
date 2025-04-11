@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { TextField, Button, DialogActions, DialogContent } from '@mui/material';
-import { SERVER_URL } from '../../Constants';
+import { GRADEBOOK_URL } from '../../Constants';
 import Dialog from "@mui/material/Dialog";
 
 // instructor enters students' grades for an assignment
@@ -32,7 +32,7 @@ const AssignmentGrade = (props) => {
 
     const fetchGrades = async () => {
         try {
-            const response = await fetch(`${SERVER_URL}/assignments/${assignmentId}/grades`);
+            const response = await fetch(`${GRADEBOOK_URL}/assignments/${assignmentId}/grades`);
             if (response.ok) {
                 const data = await response.json();
                 if (data.length > 0) {
@@ -60,7 +60,7 @@ const AssignmentGrade = (props) => {
 
     const onSave = async () => {
         try {
-            const response = await fetch(`${SERVER_URL}/grades`, {
+            const response = await fetch(`${GRADEBOOK_URL}/grades`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(gradeData.grades)
