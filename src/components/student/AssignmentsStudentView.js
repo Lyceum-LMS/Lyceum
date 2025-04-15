@@ -21,6 +21,7 @@ import {
     Link,
     Alert
 } from '@mui/material';
+import {GRADEBOOK_URL} from "../../Constants";
 
 // student views a list of assignments and assignment grades
 // use the URL  /assignments?studentId= &year= &semester=
@@ -239,7 +240,7 @@ const AssignmentsStudentView = () => {
         setLoading(true);
         setError(null);
 
-        fetch(`http://localhost:8080/assignments?studentId=${studentId}&year=${yearToUse}&semester=${semesterToUse}`)
+        fetch(`${GRADEBOOK_URL}/assignments?studentId=${studentId}&year=${yearToUse}&semester=${semesterToUse}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
