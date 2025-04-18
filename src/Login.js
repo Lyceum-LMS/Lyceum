@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import SERVER_URL from './Constants';
+import {SERVER_URL} from './Constants';
 
 const Login = (props) => {
     const[user, setUser] = useState({username:'', password:''});
