@@ -25,7 +25,6 @@ export const StudentRouter = (props) => {
     );
 }
 
-
 export const StudentHome = () => {
 
   return (
