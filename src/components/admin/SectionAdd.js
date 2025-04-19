@@ -44,6 +44,10 @@ const SectionAdd = (props)  => {
         }
     }
 
+    // a8 sls
+    const jwt = sessionStorage.getItem('jwt');
+
+    // a8 sls
     const addSection = async (section) => {
         try {
           const response = await fetch (`${SERVER_URL}/sections`,
@@ -51,6 +55,7 @@ const SectionAdd = (props)  => {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
+                  'Authorization': jwt,
               }, 
               body: JSON.stringify(section),
             });

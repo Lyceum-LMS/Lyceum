@@ -39,6 +39,9 @@ import {
  */
 
 const AssignmentsStudentView = () => {
+    // a8 sls
+    const jwt = sessionStorage.getItem('jwt');
+
     const [assignments, setAssignments] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -239,7 +242,14 @@ const AssignmentsStudentView = () => {
         setLoading(true);
         setError(null);
 
-        fetch(`http://localhost:8080/assignments?studentId=${studentId}&year=${yearToUse}&semester=${semesterToUse}`)
+        // fetch(`http://localhost:8080/assignments?studentId=${studentId}&year=${yearToUse}&semester=${semesterToUse}`)
+        fetch(`http://localhost:8080/assignments?year=${yearToUse}&semester=${semesterToUse}`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': jwt,
+                },
+            })
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');

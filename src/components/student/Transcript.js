@@ -23,12 +23,22 @@ const Transcript = (props) => {
     //     "room": "100", "times": "M W 10:00-11:50", "credits": 4, "year": 2024, "semester": "Fall"
     // }
 
+    // a8 sls
+    const jwt = sessionStorage.getItem('jwt');
+
     const fetchTranscript = async () => {
         if (search.studentId==='') {
             setMessage("Enter search parameters");
         } else {
             try {
-                const response = await fetch(`${SERVER_URL}/transcripts?studentId=${search.studentId}`);
+                // const response = await fetch(`${SERVER_URL}/transcripts?studentId=${search.studentId}`);
+                const response = await fetch(`${SERVER_URL}/transcripts`,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': jwt,
+                        },
+                    });
                 if (response.ok) {
                     const data = await response.json();
                     setTranscripts(data);

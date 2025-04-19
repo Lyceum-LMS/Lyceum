@@ -21,6 +21,10 @@ import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, 
  * - The `studentId` is currently hardcoded to 3 until login is implemented in a future assignment.
  * - Displays errors and handles loading states appropriately.
  */
+
+// a8 sls
+const jwt = sessionStorage.getItem('jwt');
+
 const CourseEnroll = () => {
     // State to store the list of open sections
     const [sections, setSections] = useState([]);
@@ -39,10 +43,20 @@ const CourseEnroll = () => {
         fetchOpenSections();
     }, []);
 
+    // a8 sls
+    const jwt = sessionStorage.getItem('jwt');
+
     // Fetch open sections from the backend API
+    // a8 sls
     const fetchOpenSections = () => {
         setLoading(true); // start loading
-        fetch(`http://localhost:8080/sections/open`)
+        fetch(`http://localhost:8080/sections/open`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': jwt,
+                },
+            })
             .then(response => {
                 console.log("Response status:", response.status);
                 if (!response.ok) {
@@ -74,8 +88,13 @@ const CourseEnroll = () => {
 
         // Confirm enrollment from the user
         if (window.confirm(`Are you sure you want to enroll in section ${sectionNo}?`)) {
-            fetch(`http://localhost:8080/enrollments/sections/${sectionNo}?studentId=${studentId}`, {
-                method: 'POST'
+            // fetch(`http://localhost:8080/enrollments/sections/${sectionNo}?studentId=${studentId}`, {
+            fetch(`http://localhost:8080/enrollments/sections/${sectionNo}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': jwt,
+                },
             })
                 .then(response => {
                     console.log("Enrollment response status:", response.status);

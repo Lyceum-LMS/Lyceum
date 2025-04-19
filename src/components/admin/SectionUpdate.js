@@ -39,6 +39,10 @@ const SectionUpdate = (props)  => {
         saveSection(section);
     }
 
+    // a8 sls
+    const jwt = sessionStorage.getItem('jwt');
+
+    // a8 sls
     const saveSection = async (section) => {
         try {
           const response = await fetch (`${SERVER_URL}/sections`, 
@@ -46,6 +50,7 @@ const SectionUpdate = (props)  => {
               method: 'PUT',
               headers: {
                 'Content-Type': 'application/json',
+                  'Authorization': jwt,
               }, 
               body: JSON.stringify(section),
             });
