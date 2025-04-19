@@ -20,10 +20,20 @@ const EnrollmentsView = (props) => {
     const location = useLocation();
     const {secNo, courseId, secId} = location.state;
 
+    // a8 sls
+    const jwt = sessionStorage.getItem('jwt');
+
     const fetchEnrollments = async () => {
         if(!secNo) return;
         try {
-            const response = await fetch(`${SERVER_URL}/sections/${secNo}/enrollments`);
+            const response = await fetch(`${SERVER_URL}/sections/${secNo}/enrollments`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': jwt,
+                    },
+                });
+
             if (response.ok) {
                 const data = await response.json();
                 setEnrollments(data);
@@ -39,11 +49,15 @@ const EnrollmentsView = (props) => {
         fetchEnrollments();
     }, [] );
 
+    // a8 sls
     const saveGrades = async () => {
         try {
             const response = await fetch(`${SERVER_URL}/enrollments`, {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': jwt,
+                },
                 body: JSON.stringify(enrollments)
             });
             if (response.ok) {

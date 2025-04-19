@@ -13,9 +13,19 @@ function UsersView(props) {
 
     const [message, setMessage] = useState('');
 
+    // a8 sls
+    const jwt = sessionStorage.getItem('jwt');
+
+    // a8 sls
     const  fetchUsers = async () => {
       try {
-        const response = await fetch(`${SERVER_URL}/users`);
+        const response = await fetch(`${SERVER_URL}/users`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': jwt,
+                },
+            });
         if (response.ok) {
           const users = await response.json();
           setUsers(users);
@@ -32,13 +42,15 @@ function UsersView(props) {
       fetchUsers();
     }, []);
 
+    // a8 sls
     const saveUser = async (user) => {
       try {
         const response = await fetch(`${SERVER_URL}/users`,
           {
             method: 'PUT',
             headers: {
-              'Content-Type': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': jwt,
             }, 
             body: JSON.stringify(user),
           });
@@ -54,13 +66,15 @@ function UsersView(props) {
       }   
     }
 
+    // a8 sls
     const addUser = async (user) => {
       try {
         const response = await  fetch(`${SERVER_URL}/users`,
           {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': jwt,
             }, 
             body: JSON.stringify(user),
           });
@@ -77,6 +91,7 @@ function UsersView(props) {
       }
     }
 
+    // a8 sls
     const deleteUser = async (id) => {
       try {
         const response = await fetch(`${SERVER_URL}/users/${id}`,
@@ -84,6 +99,7 @@ function UsersView(props) {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json',
+                'Authorization': jwt,
             }, 
           });
         if (response.ok) {

@@ -20,6 +20,10 @@ const InstructorSectionsView = (props) => {
     const [sections, setSections] = useState([]);
     const [message, setMessage] = useState('');
 
+    // a8 sls
+    const jwt = sessionStorage.getItem('jwt');
+
+    // a8 sls
     useEffect(() => {
         const fetchSections = async () => {
             if (!year || !semester) {
@@ -27,11 +31,18 @@ const InstructorSectionsView = (props) => {
                 return;
             }
 
-            const email = 'dwisneski@csumb.edu'; // hardcoded for now
-            const url = `${SERVER_URL}/sections?email=${email}&year=${year}&semester=${semester}`;
+            // const email = 'dwisneski@csumb.edu'; // hardcoded for now
+            // const url = `${SERVER_URL}/sections?email=${email}&year=${year}&semester=${semester}`;
+            const url = `${SERVER_URL}/sections?year=${year}&semester=${semester}`;
 
             try {
-                const response = await fetch(url);
+                const response = await fetch(url,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': jwt,
+                        },
+            });
                 if (!response.ok) {
                     throw new Error('Failed to fetch');
                 }

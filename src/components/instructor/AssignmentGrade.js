@@ -30,9 +30,19 @@ const AssignmentGrade = (props) => {
         fetchGrades();
     }
 
+    // a8 sls
+    const jwt = sessionStorage.getItem('jwt');
+
+    // a8 sls
     const fetchGrades = async () => {
         try {
-            const response = await fetch(`${SERVER_URL}/assignments/${assignmentId}/grades`);
+            const response = await fetch(`${SERVER_URL}/assignments/${assignmentId}/grades`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': jwt,
+                    },
+                });
             if (response.ok) {
                 const data = await response.json();
                 if (data.length > 0) {
@@ -58,11 +68,15 @@ const AssignmentGrade = (props) => {
         setGradeData({ ...gradeData, grades: updatedGrades });
     };
 
+    // a8 sls
     const onSave = async () => {
         try {
             const response = await fetch(`${SERVER_URL}/grades`, {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': jwt,
+                },
                 body: JSON.stringify(gradeData.grades)
             });
             if (response.ok) {

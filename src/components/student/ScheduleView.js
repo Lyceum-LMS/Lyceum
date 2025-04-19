@@ -22,6 +22,9 @@ const ScheduleView = (props) => {
     const [search, setSearch] = useState({studentId: 3, year:'', semester:''});
     const [message, setMessage] = useState('');
 
+    // a8 sls
+    const jwt = sessionStorage.getItem('jwt');
+
     // http://localhost:8080/enrollments?studentId=3&year=2025&semester=Spring
     // returns
     // {
@@ -38,7 +41,14 @@ const ScheduleView = (props) => {
             setMessage("Enter search parameters");
         } else {
             try {
-                const response = await fetch(`${SERVER_URL}/enrollments?studentId=${search.studentId}&year=${search.year}&semester=${search.semester}`);
+                // const response = await fetch(`${SERVER_URL}/enrollments?studentId=${search.studentId}&year=${search.year}&semester=${search.semester}`);
+                const response = await fetch(`${SERVER_URL}/enrollments?year=${search.year}&semester=${search.semester}`,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': jwt,
+                        },
+                    })
                 if (response.ok) {
                     const data = await response.json();
                     setEnrollments(data);
@@ -59,6 +69,7 @@ const ScheduleView = (props) => {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
+                        'Authorization': jwt,
                     },
                 });
             if (response.ok) {

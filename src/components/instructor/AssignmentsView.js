@@ -30,9 +30,20 @@ const AssignmentsView = (props) => {
 
     const [editingAssignment, setEditingAssignment] = useState(null);
 
+    // a8 sls
+    const jwt = sessionStorage.getItem('jwt');
+
+    // a8 sls
     const fetchAssignments = async () => {
         try {
-            const response = await fetch(`${SERVER_URL}/sections/${secNo}/assignments?instructorEmail=dwisneski@csumb.edu`);
+            // const response = await fetch(`${SERVER_URL}/sections/${secNo}/assignments?instructorEmail=dwisneski@csumb.edu`);
+            const response = await fetch(`${SERVER_URL}/sections/${secNo}/assignments`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': jwt,
+                    },
+                });
             if (response.ok) {
                 const data = await response.json();
                 setAssignments(data);
@@ -53,15 +64,18 @@ const AssignmentsView = (props) => {
         console.log("Grade assignment", assignmentId);
     };
 
+    // a8 sls
     const updateAssignment = async (assignment) => {
         console.log("AssignmentView > updateAssignment");
         console.log(assignment);
         try {
-            const response = await fetch(`${SERVER_URL}/assignments/${assignment.id}?instructorEmail=dwisneski@csumb.edu`,
+            // const response = await fetch(`${SERVER_URL}/assignments/${assignment.id}?instructorEmail=dwisneski@csumb.edu`,
+            const response = await fetch(`${SERVER_URL}/assignments/${assignment.id}`,
                 {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
+                        'Authorization': jwt,
                     },
                     body: JSON.stringify(assignment),
                 });
@@ -78,11 +92,14 @@ const AssignmentsView = (props) => {
         }
     }
 
+    // a8 sls
     const deleteAssignment = async (assignmentId) => {
         try {
-            const response = await fetch(`${SERVER_URL}/assignments/${assignmentId}?instructorEmail=dwisneski@csumb.edu`, {
+            // const response = await fetch(`${SERVER_URL}/assignments/${assignmentId}?instructorEmail=dwisneski@csumb.edu`, {
+            const response = await fetch(`${SERVER_URL}/assignments/${assignmentId}`, {
                 method: 'DELETE',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json',
+                'Authorization': jwt} ,
             });
             if (response.ok) {
                 setMessage("Assignment deleted");
@@ -124,11 +141,13 @@ const AssignmentsView = (props) => {
             secNo: secNo
         };
         try {
-            const response = await fetch(`${SERVER_URL}/assignments?instructorEmail=dwisneski@csumb.edu`,
+            // const response = await fetch(`${SERVER_URL}/assignments?instructorEmail=dwisneski@csumb.edu`,
+            const response = await fetch(`${SERVER_URL}/assignments`,
                 {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
+                        'Authorization': jwt,
                     },
                     body: JSON.stringify(updatedAssignment),
                 });
