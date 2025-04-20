@@ -34,6 +34,7 @@ const AssignmentGrade = (props) => {
     const jwt = sessionStorage.getItem('jwt');
 
     // a8 sls
+    // verify instructor authentication on backend
     const fetchGrades = async () => {
         try {
             const response = await fetch(`${SERVER_URL}/assignments/${assignmentId}/grades`,
