@@ -21,6 +21,7 @@ import {
     Link,
     Alert
 } from '@mui/material';
+import {SERVER_URL} from '../../Constants';
 
 // student views a list of assignments and assignment grades
 // use the URL  /assignments?studentId= &year= &semester=
@@ -243,7 +244,7 @@ const AssignmentsStudentView = () => {
         setError(null);
 
         // fetch(`http://localhost:8080/assignments?studentId=${studentId}&year=${yearToUse}&semester=${semesterToUse}`)
-        fetch(`http://localhost:8080/assignments?year=${yearToUse}&semester=${semesterToUse}`,
+        fetch(`${SERVER_URL}/assignments?year=${yearToUse}&semester=${semesterToUse}`,
             {
                 headers: {
                     'Content-Type': 'application/json',

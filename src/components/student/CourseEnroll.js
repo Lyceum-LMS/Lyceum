@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 // MUI components for layout and UI elements
 import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import {SERVER_URL} from '../../Constants';
 
 // students displays a list of open sections for a ✅
 // use the URL /sections/open ✅
@@ -50,7 +51,7 @@ const CourseEnroll = () => {
     // a8 sls
     const fetchOpenSections = () => {
         setLoading(true); // start loading
-        fetch(`http://localhost:8080/sections/open`,
+        fetch(`${SERVER_URL}/sections/open`,
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -89,7 +90,7 @@ const CourseEnroll = () => {
         // Confirm enrollment from the user
         if (window.confirm(`Are you sure you want to enroll in section ${sectionNo}?`)) {
             // fetch(`http://localhost:8080/enrollments/sections/${sectionNo}?studentId=${studentId}`, {
-            fetch(`http://localhost:8080/enrollments/sections/${sectionNo}`, {
+            fetch(`${SERVER_URL}/enrollments/sections/${sectionNo}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
